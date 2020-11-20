@@ -1,29 +1,22 @@
 #include "Ship.hpp"
 #include "App.hpp"
-
+#include "wrap.hpp"
 #include <gl\GL.h>
+#include "Vector2.hpp"
 
-// STL
+
 #include <iostream>
 #include <cmath>
 
 namespace Engine
 {
-    const float PI = 3.141592653;
+   
     const float MAX_VELOCITY = 500.0f;
     const float THRUST = 15.0f;
     const float DRAG_FORCE = 0.999f;
     const float ANGLE_OFFSET = 90.0f;
 
-    inline float wrap(float x, float min, float max)
-    {
-        if (x < min)
-            return max - (min - x);
-        if (x > max)
-            return min + (x - max);
-        return x;
-    }
-
+  
     Ship::Ship(App *parent)
         : m_position(Math::Vector2::Origin), m_velocity(Math::Vector2::Origin), m_angle(0.0f), m_rotation(250.0f), m_mass(1.0f), m_parent(parent) // TODO: RR: Contemplate using a component based design approach
     {
@@ -67,8 +60,8 @@ namespace Engine
     {
         if (m_mass > 0)
         {
-            m_velocity.x += (impulse.x / m_mass) * cosf((m_angle + ANGLE_OFFSET) * (PI / 180));
-            m_velocity.y += (impulse.y / m_mass) * sinf((m_angle + ANGLE_OFFSET) * (PI / 180));
+            m_velocity.x += (impulse.x / m_mass) * cosf((m_angle + ANGLE_OFFSET) * (Math::Vector2::PI / 180));
+            m_velocity.y += (impulse.y / m_mass) * sinf((m_angle + ANGLE_OFFSET) * (Math::Vector2::PI / 180));
         }
     }
 
@@ -103,19 +96,49 @@ namespace Engine
         float worldMinY = -halfHeight;
         float worldMaxY = halfHeight;
 
-        m_position.x = wrap(m_position.x, worldMinX, worldMaxX);
-        m_position.y = wrap(m_position.y, worldMinY, worldMaxY);
+        m_position.x = engine::wrap(m_position.x, worldMinX, worldMaxX);
+        m_position.y = engine::wrap(m_position.y, worldMinY, worldMaxY);
     }
-
     void Ship::ChangeShip()
-    {
-         m_points.push_back(Math::Vector2(0.0f, 20.0f));
-		m_points.push_back(Math::Vector2(12.0f, -10.0f));
-		m_points.push_back(Math::Vector2(6.0f, -4.0f));
-		m_points.push_back(Math::Vector2(-6.0f, -4.0f));
-		m_points.push_back(Math::Vector2(-12.0f, -10.0f));
-    }
+	{
 
+		m_now_ship = ++ m_now_ship % 3;
+
+		m_points.clear();
+
+		switch (m_now_ship)
+		{
+		case 1:
+		
+
+			m_points.push_back(Math::Vector2(0.0, 20.0));
+			m_points.push_back(Math::Vector2(12.0, -10.0));
+			m_points.push_back(Math::Vector2(6.0, -4.0));
+			m_points.push_back(Math::Vector2(-6.0, -4.0));
+			m_points.push_back(Math::Vector2(-12.0, -10.0));
+			break;
+	
+
+		default:
+			m_points.push_back(Math::Vector2(0.0, 60.0));
+			m_points.push_back(Math::Vector2(40.0, 40.0));
+			m_points.push_back(Math::Vector2(20.0, 0.0));
+			m_points.push_back(Math::Vector2(0.0, 20.0));
+			m_points.push_back(Math::Vector2(-20.0, 0.0));
+
+			m_points.push_back(Math::Vector2(-40.0, 40.0));
+		
+			
+
+            
+			break;
+		}
+	}
+   
+   
+   
+   
+   
     void Ship::Render()
     {
         glLoadIdentity();
@@ -129,4 +152,19 @@ namespace Engine
         }
         glEnd();
     }
-} // namespace Engine
+void Ship::Reset()
+    {
+        glLoadIdentity();
+        m_position.x = 0.0f;
+        m_position.y = 0.0f;
+        m_velocity.x = 0.0f;
+        m_velocity.y = 0.0f;
+        m_angle = 0.0f;
+
+        glTranslatef(m_position.x, m_position.y, 0.0);
+
+        glRotatef(m_angle, 0.0f, 0.0f, 1.0f);
+
+        glBegin(GL_LINE_LOOP);
+    }
+}

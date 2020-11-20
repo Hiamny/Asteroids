@@ -97,6 +97,7 @@ namespace Engine
 		const float MOVE_UNIT = 15.f;
 		switch (keyBoardEvent.keysym.scancode)
 		{
+		
 		case SDL_SCANCODE_W:
 			SDL_Log("Going up");	
 			m_ship->MoveUp();	
@@ -104,6 +105,12 @@ namespace Engine
 		case SDL_SCANCODE_A:
 			SDL_Log("Going left");
 			m_ship->RotateLeft(DESIRED_FRAME_TIME);
+			break;
+			case SDL_SCANCODE_M:
+			m_ship->ChangeShip();
+			break;
+		case SDL_SCANCODE_P:
+			m_ship->Reset();
 			break;
 		case SDL_SCANCODE_S:			
 			break;

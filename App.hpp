@@ -76,6 +76,7 @@ namespace Engine
             Engine::TimeManager* m_timer;
             Engine::Ship*        m_ship;
             Engine::Asteroid*    m_asteroid;
+    Engine::Ship *m_now_ship;
     };
 }
 

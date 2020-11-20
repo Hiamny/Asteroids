@@ -30,6 +30,7 @@ namespace Engine
         void RotateRight(float deltaTime);
         void Update(float deltaTime);
         void Render();
+        void Reset();
 
     private:
         /* ==========================
@@ -48,6 +49,8 @@ namespace Engine
         float m_rotation;
         float m_currentSpeed;
         App* m_parent;
+        int m_now_ship;
+        
     };
 } // namespace Engine
 #endif
