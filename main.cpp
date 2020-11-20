@@ -8,6 +8,7 @@
 const int WIDTH = 1136;
 const int HEIGHT = 640;
 
+#endif
 int main(int argc, char ** argv)
 {
 	// Create Game Object
@@ -31,4 +32,5 @@ int main(int argc, char ** argv)
 	delete app;
 
 	return 0;
+
 } #endif
