@@ -17,14 +17,14 @@ namespace Engine
     const float ANGLE_OFFSET = 90.0f;
 
   
-    Ship::Ship(App *parent)
+    Ship::Ship(App * parent)
         : m_position(Math::Vector2::Origin), m_velocity(Math::Vector2::Origin), m_angle(0.0f), m_rotation(250.0f), m_mass(1.0f), m_parent(parent) // TODO: RR: Contemplate using a component based design approach
     {
         std::cout << "Construction of ship\n";
         ChangeShip();
     }
 
-    Ship::Ship(App *parent, float _x, float _y)
+    Ship::Ship(App * parent, float _x, float _y)
         : m_position(_x, _y), m_velocity(Math::Vector2::Origin), m_angle(0.0f), m_rotation(250.0f), m_mass(1.0f), m_parent(parent)
     {
         std::cout << "Construction of ship\n";
